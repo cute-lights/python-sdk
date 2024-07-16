@@ -38,22 +38,23 @@ jobs:
                   git add Cargo.lock
                   git commit -m "Bump version"
                   git push origin HEAD:main
+
+            - name: Install Rust stable toolchain
+              uses: actions-rs/toolchain@v1
+              with:
+                  profile: minimal
+                  toolchain: stable
+                  override: true
+
+            - name: Install maturin
+              run: python -m pip install maturin[patchelf]
+
             - name: Build wheels
-              uses: PyO3/maturin-action@v1
-              with:
-                  target: ${{ matrix.platform.target }}
-                  args: --release --out dist --find-interpreter
-                  sccache: "true"
-                  manylinux: auto
-            - name: Build sdist
-              uses: PyO3/maturin-action@v1
-              with:
-                  command: sdist
-                  args: --out dist
+              run: maturin build --release --no-sdist
+
             - name: Publish to PyPI
-              uses: PyO3/maturin-action@v1
+              shell: bash
+              run: |
+                  maturin publish --non-interactive --skip-existing target/wheels/*.whl
               env:
                   MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-              with:
-                  command: upload
-                  args: --non-interactive --skip-existing wheels-*/*
