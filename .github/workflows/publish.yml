@@ -29,8 +29,9 @@ jobs:
                   python-version: 3.x
 
             - name: Bump version
-              uses: tj-actions/cargo-bump@v3
-
+              uses: cute-lights/bump-version@main
+              with:
+                  files: "Cargo.toml pyproject.toml"
 
             - name: Install Rust stable toolchain
               uses: actions-rs/toolchain@v1
@@ -48,15 +49,5 @@ jobs:
             - name: Publish to PyPI
               shell: bash
               run: |
-                  maturin publish --non-interactive --skip-existing target/wheels/*.whl
-              env:
-                  MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-
-            - name: Commit changes
-              run: |
-                  git config --local user.email "github-actions[bot]@users.noreply.github.com"
-                  git config --local user.name "github-actions[bot]"
-                  git add Cargo.toml
-                  git add Cargo.lock
-                  git commit -m "Bump version"
-                  git push origin HEAD:main
+                  python -m pip install twine
+                  python -m twine upload --skip-existing --verbose dist/*.whl
