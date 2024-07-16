@@ -10,6 +10,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = { version = "0.22.0", features = ["experimental-async", "anyhow"] }
-cute_lights = { path = "../rust" }
+cute_lights = { git = "https://github.com/cute-lights/rust-sdk", branch = "main" }
 tokio = { version = "1.38.0", features = ["full"] }
 anyhow = "1.0.86"
