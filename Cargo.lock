@@ -142,8 +142,8 @@ checksum = "06ea2b9bc92be3c2baa9334a323ebca2d6f074ff852cd1d7b11064035cd3868f"
 
 [[package]]
 name = "cute_lights"
-version = "0.1.2"
-source = "git+https://github.com/cute-lights/rust-sdk?tag=v0.2.2#5f74dbc5766657410c36664d5278c3ac2dec9470"
+version = "0.2.2"
+source = "git+https://github.com/cute-lights/rust-sdk?tag=v0.2.3#83ade66766f977258053cb92491fa60cd0b2ae92"
 dependencies = [
  "anyhow",
  "async-trait",
